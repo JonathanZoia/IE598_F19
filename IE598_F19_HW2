@@ -1,0 +1,69 @@
+import pandas as pd
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier
+
+
+#Import Treasury Squeeze Dataset. First two columns (rowindex and contract) were MANUALLY deleted in the .csv file.
+#First row was also deleted, please see reasoning below.
+df = pd.read_csv(r"C:\Users\jazoi\Downloads\Treasury Squeeze test - DS1.csv", header=None)
+df.head()
+
+treasury_1 = df.iloc[:,0:9]
+treasury_2 = df.iloc[:,-1]
+
+X_train, X_test, y_train, y_test= train_test_split(treasury_1, treasury_2, test_size=0.15, random_state=15)
+
+knn = KNeighborsClassifier(n_neighbors = 9)
+#First row was deleted due to constant error that string to float was not converted. Will look into later
+knn.fit(X_train, y_train)
+y_pred = knn.predict(X_test)
+
+knn.score(X_test, y_test)
+
+#Provided as a source for testing multiple values of K for KNN classifier. Provided by Prof. Murphy on Compass via .docx file
+#Code was translated manually. Supported by sci-kitlearn.org from 1.6 Nearest Neighbor
+k_range = range(1, 26)
+scores = []
+for k in k_range:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(X_train, y_train)
+    y_pred = knn.predict(X_test)
+    scores.append(accuracy_score(y_test, y_pred))
+    
+index = list(range(1,26))
+print(scores)
+
+print("The lowest score is:")
+print(min(scores))
+print("The highest score is:")
+print(max(scores))
+
+#Decision Tree was derived from scikit-learn.org from 1.10.1 Classification. Transposed from Iris Dataset to Treasury .csv file
+dt = DecisionTreeClassifier(random_state=0, max_depth=5)
+dt.fit(X_train, y_train)
+y_pred = dt.predict(X_test)
+
+acc = accuracy_score(y_test, y_pred)
+
+print("The result is listed below:")
+print(acc)
+
+#Transposed from code provided by Prof. Murphy. Supported by sci-kitlearn.org from 1.10 Classification
+dtc_range = range(1, 26)
+mscores = []
+for m in dtc_range:
+    dt = DecisionTreeClassifier(max_depth = m, random_state = 2)
+    dt.fit(X_train, y_train)
+    y_pred = dt.predict(X_test)
+    mscores.append(accuracy_score(y_test, y_pred))
+    
+
+index = list(range(1,26))
+print("The highest score is listed below:")
+print(max(mscores))
+
+print("My name is Jonathan Zoia")
+print("My NetID is jzoia2")
+print("I hereby certify that I have read the University policy on Academic Integrity and that I am not in violation.")
