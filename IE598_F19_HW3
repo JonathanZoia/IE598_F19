@@ -1,0 +1,218 @@
+#The code below has been drafted upon the completion of reading and observing code provided in the text (Chapter 2)
+#Primary assistance was recieved from DataCamp Course: Statistical Thinking in Python by Justin Bois
+#Secondary assistance fromm "Machine Learning in Python" by Michael Bowles. Listing 2-1 to 2-11 is acts as guide for code.
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import sys
+import seaborn as sns
+
+#Import High Yield Corporate Bond .csv from computer and output dataset
+
+data = pd.read_csv(r"C:\Users\jazoi\Downloads\HY_Universe_corporate bond.csv", header=None)
+data.head()
+
+#Prints total nunmber of rows and columns in the dataset
+#Confirmed correct by manual check of the dataset .csv file
+
+total_rows=len(data.axes[0])
+total_cols=len(data.axes[1])
+print("Number of Rows: "+ str(total_rows))
+print("Number of Columns: "+ str(total_cols))
+
+#My primary interest for producing EDAs is to look deeper into the liquidity scores of the corproate bonds.
+#Banks generate liquidity scores for bonds based off of various factors. Two factors in this set are # and volume of trades
+#I plan on investigating volume of trades to the liquidity scores.
+#Index 15 and 22 (Column 16 and 23)
+
+#Only reads the two columns from the file: LiquitiyScore and volune_trades
+
+data = pd.read_csv(r"C:\Users\jazoi\Downloads\HY_Universe_corporate bond.csv", usecols=[15,22])
+print(data)
+
+#General data for Liquidity Score
+
+mean1 = data['LiquidityScore'].mean()
+std1 = data['LiquidityScore'].std()
+var1 = std1**2
+max1 = data['LiquidityScore'].max()
+min1 = data['LiquidityScore'].min()
+
+
+print('Average Liqudity Score: ' + str(mean1))
+print('Standard Deviation of Liqudity Scores: ' + str(std1))
+print('Variance of Liquidity Scores: ' + str(var1))
+print('Maximum Liqudity Score: ' + str(max1))
+print('Minimum Liqudity Score: ' + str(min1))
+
+#General data for volume of trades
+
+mean2 = data['volume_trades'].mean()
+std2 = data['volume_trades'].std()
+var2 = std1**2
+max2 = data['volume_trades'].max()
+min2 = data['volume_trades'].min()
+
+
+print('Average Volume of Trades: ' + str(mean2))
+print('Standard Deviation of Volume of Trades: ' + str(std2))
+print('Variance of Volume of Trades: ' + str(var2))
+print('Maximum Volume of Trades: ' + str(max2))
+print('Minimum Volume of Trades: ' + str(min2))
+
+# Plot histogram of Liquidity Scores
+_ = plt.hist(data['LiquidityScore'])
+_ = plt.xlabel('Liqidity Score')
+_ = plt.ylabel('Frequency')
+_ = plt.title('Liquidity Score Histogram')
+
+# Show histogram
+plt.show()
+
+# Plot histogram of Volume of Trades
+_ = plt.hist(data['volume_trades'])
+_ = plt.xlabel('Volume of Trades')
+_ = plt.ylabel('Frequency')
+_ = plt.title('Volume of Trades Histogram (x 10 million)')
+
+# Show histogram
+plt.show()
+
+# sns.swarmplot? was used to assist in the construction of a bee swarm plot
+
+#Create bee swarm plot
+sns.swarmplot(x=data['LiquidityScore'], y=data['volume_trades'])
+
+# Label the axes
+plt.xlabel('Liquidity Score')
+plt.ylabel('Volumne of Trades (X 10 million)')
+
+# Show the plot
+plt.show()
+
+def ecdf(data):
+#Compute ECDF for a one-dimensional array of measurements
+
+    # Number of data points: n
+    n = len(data['LiquidityScore'])
+
+    # x-data for the ECDF: x
+    x = np.sort(data['LiquidityScore'])
+
+    # y-data for the ECDF: y
+    y = np.arange(1, n+1) / n
+
+    return x, y
+
+# Compute ECDF for versicolor data: x_vers, y_vers
+x_LS, y_LS = ecdf(data)
+
+# Generate plot
+_ = plt.plot(x_LS, y_LS, marker = '.', linestyle = 'none')
+
+# Label the axes
+_ = plt.xlabel('Liquidity Score')
+_ = plt.ylabel('ECDF')
+
+# Display the plot
+plt.show()
+
+def ecdf(data):
+#Compute ECDF for a one-dimensional array of measurements
+
+    # Number of data points: n
+    n = len(data['volume_trades'])
+
+    # x-data for the ECDF: x
+    # Divided by 1 billion to assist with comparison ECDF below
+    x = np.sort(data['volume_trades']/1000000000)
+
+    # y-data for the ECDF: y
+    y = np.arange(1, n+1) / n
+
+    return x, y
+
+# Compute ECDF for versicolor data: x_vers, y_vers
+x_VT, y_VT = ecdf(data)
+
+# Generate plot
+_ = plt.plot(x_VT, y_VT, marker = '.', linestyle = 'none')
+
+# Label the axes
+_ = plt.xlabel('Volume of Trades (x 10 million)')
+_ = plt.ylabel('ECDF')
+
+# Display the plot
+plt.show()
+
+#Now take the two separate plots and combine them together for comparision purposes
+
+# Plot all ECDFs on the same plot
+_ = plt.plot(x_VT, y_VT, marker = '.', linestyle = 'none')
+_ = plt.plot(x_LS, y_LS, marker = '.', linestyle = 'none')
+
+plt.margins(.01)
+
+# Display the plot
+plt.show()
+
+# sns.boxplot? was used to assist in the construction of a bee swarm plot
+
+#Create bee swarm plot
+sns.boxplot(x=data['LiquidityScore'], y=data['volume_trades'])
+
+# Label the axes
+plt.xlabel('Liquidity Score')
+plt.ylabel('Volumne of Trades (X 10 million)')
+
+# Show the plot
+plt.show()
+
+#PLOTTED BOXPLOT, BUT REALIZED THIS WAS A POOR WAY TO DISPLAY THE PROVIDED DATA.
+#FOR LEARNING PURPOSES THE IQR AND PERCENTILES WERE CALCULATED BELOW
+
+#Scatter plot of data
+_ = plt.plot(data['LiquidityScore'], data['volume_trades'], marker='.', linestyle='none')
+
+# Label the axes
+plt.xlabel('Liquidity Score')
+plt.ylabel('Volumne of Trades (X 10 million)')
+
+# Show the plot
+plt.show()
+
+import pandas as pd
+from pandas import DataFrame
+
+data = pd.read_csv(r"C:\Users\jazoi\Downloads\HY_Universe_corporate bond.csv", usecols=[15,22])
+
+#Wish I would have known this function earlier... Manual entry of mean, std, min, max, etc. was not needed.
+#Nonetheless, just a check to confirm 'manual' calculations were correct!
+print(data.describe())
+
+#Prints correlation between two variables
+print(data.corr())
+
+#VERY STRONG correlation between liquidity score and volumne of trades, as I intially expected
+
+#Prints covariance between two variables
+print(data.cov())
+
+#Create and graph a heat map
+import pandas as pd
+from pandas import DataFrame
+import matplotlib.pyplot as plot
+
+#reads corporate bonds into pandas data frame
+data = pd.read_csv(r"C:\Users\jazoi\Downloads\HY_Universe_corporate bond.csv", usecols=[15,22])
+#calculate correlations between real-valued attributes
+corLS = DataFrame(data.corr())
+#visualize correlations using heatmap
+plot.pcolor(corLS)
+plot.show()
+
+print("My name is Jonathan Zoia")
+print("My NetID is jzoia2")
+print("I hereby certify that I have read the University policy on Academic Integrity and that I am not in violation.")
+
