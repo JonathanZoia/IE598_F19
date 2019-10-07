@@ -1,0 +1,232 @@
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier
+import statistics
+
+data = pd.read_csv(r"C:\Users\jazoi\Downloads\ccdefault.csv")
+data.head()
+
+#Prints total nunmber of rows and columns in the dataset
+#Confirmed correct by manual check of the dataset .csv file
+#Recycled from my personal HW3 assignment
+#Prints total nunmber of rows and columns in the dataset
+#Confirmed correct by manual check of the dataset .csv file
+#Reused from my personal HW3 assignment
+
+total_rows=len(data.axes[0])
+total_cols=len(data.axes[1])
+print("Number of Rows: "+ str(total_rows))
+print("Number of Columns: "+ str(total_cols))
+print()
+data.shape
+
+data.info()
+#No data needs to be dropped!
+
+#Used to show all rows instead of showing the same found in data.head()
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+data.describe()
+
+
+# PART ONE: Random Test-Train Split
+
+y = data.iloc[:,24]
+X = data.iloc[:, 1:-1]
+
+dt = DecisionTreeClassifier()
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 1)
+dt.fit(X_train, y_train)
+    
+y_pred_test = dt.predict(X_test)
+y_pred_train = dt.predict(X_train)
+
+InSample1 = accuracy_score(y_train, y_pred_train)
+OutSample1 = accuracy_score(y_test, y_pred_test)
+
+print("Random State 1 Results")
+print("-----------------------------------------------------")
+print("The in-sample accuracy score is " + str(InSample1))
+print("The out-of-sample accuracy score is " + str(OutSample1))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 3)
+dt.fit(X_train, y_train)
+    
+y_pred_test = dt.predict(X_test)
+y_pred_train = dt.predict(X_train)
+
+InSample3 = accuracy_score(y_train, y_pred_train)
+OutSample3 = accuracy_score(y_test, y_pred_test)
+
+print("Random State 3 Results")
+print("-----------------------------------------------------")
+print("The in-sample accuracy score is " + str(InSample3))
+print("The out-of-sample accuracy score is " + str(OutSample3))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 4)
+dt.fit(X_train, y_train)
+    
+y_pred_test = dt.predict(X_test)
+y_pred_train = dt.predict(X_train)
+
+InSample4 = accuracy_score(y_train, y_pred_train)
+OutSample4 = accuracy_score(y_test, y_pred_test)
+
+print("Random State 4 Results")
+print("-----------------------------------------------------")
+print("The in-sample accuracy score is " + str(InSample4))
+print("The out-of-sample accuracy score is " + str(OutSample4))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 5)
+dt.fit(X_train, y_train)
+    
+y_pred_test = dt.predict(X_test)
+y_pred_train = dt.predict(X_train)
+
+InSample5 = accuracy_score(y_train, y_pred_train)
+OutSample5 = accuracy_score(y_test, y_pred_test)
+
+print("Random State 5 Results")
+print("-----------------------------------------------------")
+print("The in-sample accuracy score is " + str(InSample5))
+print("The out-of-sample accuracy score is " + str(OutSample5))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 6)
+dt.fit(X_train, y_train)
+    
+y_pred_test = dt.predict(X_test)
+y_pred_train = dt.predict(X_train)
+
+InSample6 = accuracy_score(y_train, y_pred_train)
+OutSample6 = accuracy_score(y_test, y_pred_test)
+
+print("Random State 6 Results")
+print("-----------------------------------------------------")
+print("The in-sample accuracy score is " + str(InSample6))
+print("The out-of-sample accuracy score is " + str(OutSample6))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 7)
+dt.fit(X_train, y_train)
+    
+y_pred_test = dt.predict(X_test)
+y_pred_train = dt.predict(X_train)
+
+InSample7 = accuracy_score(y_train, y_pred_train)
+OutSample7 = accuracy_score(y_test, y_pred_test)
+
+print("Random State 7 Results")
+print("-----------------------------------------------------")
+print("The in-sample accuracy score is " + str(InSample7))
+print("The out-of-sample accuracy score is " + str(OutSample7))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 8)
+dt.fit(X_train, y_train)
+    
+y_pred_test = dt.predict(X_test)
+y_pred_train = dt.predict(X_train)
+
+InSample8 = accuracy_score(y_train, y_pred_train)
+OutSample8 = accuracy_score(y_test, y_pred_test)
+
+print("Random State 8 Results")
+print("-----------------------------------------------------")
+print("The in-sample accuracy score is " + str(InSample8))
+print("The out-of-sample accuracy score is " + str(OutSample8))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 9)
+dt.fit(X_train, y_train)
+    
+y_pred_test = dt.predict(X_test)
+y_pred_train = dt.predict(X_train)
+
+InSample9 = accuracy_score(y_train, y_pred_train)
+OutSample9 = accuracy_score(y_test, y_pred_test)
+
+print("Random State 9 Results")
+print("-----------------------------------------------------")
+print("The in-sample accuracy score is " + str(InSample9))
+print("The out-of-sample accuracy score is " + str(OutSample9))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 10)
+dt.fit(X_train, y_train)
+    
+y_pred_test = dt.predict(X_test)
+y_pred_train = dt.predict(X_train)
+
+InSample10 = accuracy_score(y_train, y_pred_train)
+OutSample10 = accuracy_score(y_test, y_pred_test)
+
+print("Random State 10 Results")
+print("-----------------------------------------------------")
+print("The in-sample accuracy score is " + str(InSample10))
+print("The out-of-sample accuracy score is " + str(OutSample10))
+
+MEAN_IN_SAMPLE = [InSample1 , InSample2 , InSample3 , InSample4 , InSample5 , InSample6 , InSample7 
+                 , InSample8 , InSample9 , InSample10]
+
+SD_IN_SAMPLE = [InSample1 , InSample2 , InSample3 , InSample4 , InSample5 , InSample6 , InSample7 
+                 , InSample8 , InSample9 , InSample10]
+
+MEAN_OUT_SAMPLE = [OutSample1 , OutSample2 , OutSample3 , OutSample4 , OutSample5 , OutSample6 , OutSample7 
+                 , OutSample8 , OutSample9 , OutSample10]
+
+SD_OUT_SAMPLE = [OutSample1 , OutSample2 , OutSample3 , OutSample4 , OutSample5 , OutSample6 , OutSample7 
+                 , OutSample8 , OutSample9 , OutSample10]
+
+print("The in-sample accuracy score average is " + str(statistics.mean(MEAN_IN_SAMPLE)))
+print("The in-sample accuracy score standard deviation is " + str(statistics.stdev(SD_IN_SAMPLE)))
+print()
+print("The out-of-sample accuracy score average is " + str(statistics.mean(MEAN_OUT_SAMPLE)))
+print("The out-of-sample accuracy score standard deviation is " + str(statistics.stdev(SD_OUT_SAMPLE)))
+
+#Installation of Pretty Table to set up table of results
+pip install PrettyTable
+
+#Assistance from http://zetcode.com/python/prettytable/
+
+from prettytable import PrettyTable
+    
+x = PrettyTable()
+x.field_names = ["Random State", "In-Sample", "Out-of-Sample"]
+x.add_row(["1", str(InSample1), str(OutSample1)])
+x.add_row(["2", str(InSample2), str(OutSample2)])
+x.add_row(["3", str(InSample3), str(OutSample3)])
+x.add_row(["4", str(InSample4), str(OutSample4)])
+x.add_row(["5", str(InSample5), str(OutSample5)])
+x.add_row(["6", str(InSample6), str(OutSample6)])
+x.add_row(["7", str(InSample7), str(OutSample7)])
+x.add_row(["8", str(InSample8), str(OutSample8)])
+x.add_row(["9", str(InSample9), str(OutSample9)])
+x.add_row(["10", str(InSample10), str(OutSample10)])
+x.add_row(["Mean", str(statistics.mean(MEAN_IN_SAMPLE)), str(statistics.mean(MEAN_OUT_SAMPLE))])
+x.add_row(["St.Dev", str(statistics.stdev(SD_IN_SAMPLE)), str(statistics.stdev(SD_OUT_SAMPLE))])
+
+print(x)
+
+#PART TWO: Cross Validation
+
+
+CVdt = DecisionTreeClassifier()
+
+cv_scores_train = cross_val_score(CVdt, X_train, y_train, cv=10)
+cv_scores_test = cross_val_score(CVdt, X_test, y_test, cv=10)
+
+Random_State = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+x1 = PrettyTable()
+x1.add_column("Random State", Random_State)
+x1.add_column("In-Sample", cv_scores_train)
+x1.add_column("Out-of-Sample", cv_scores_test)
+print(x1)
+print()
+print("The average mean of in-sample is " + str(statistics.mean(cv_scores_train)))
+print("The average standard deviation of in-sample is " + str(statistics.stdev(cv_scores_train)))
+print()
+print("The average mean of out-of-sample is " + str(statistics.mean(cv_scores_test)))
+print("The average standard deviation of out-of-sample is " + str(statistics.stdev(cv_scores_test)))
+
+print("My name is Jonathan Zoia")
+print("My NetID is: jzoia2")
+print("I hereby certify that I have read the University policy on Academic Integrity and that I am not in violation.")
